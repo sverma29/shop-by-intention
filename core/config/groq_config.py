@@ -26,8 +26,8 @@ class GroqConfig:
     api_key: Optional[str] = None
     base_url: str = "https://api.groq.com/openai/v1"
     timeout: int = 30
-    max_retries: int = 3
-    rate_limit_delay: float = 1.0
+    max_retries: int = 5
+    rate_limit_delay: float = 5.0
     
     # Model Configuration
     default_model: str = "llama3-8b-8192"
