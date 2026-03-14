@@ -1,0 +1,17 @@
+# FastAPI and web server dependencies
+fastapi==0.135.1
+uvicorn[standard]==0.41.0
+
+# Pydantic for data validation
+pydantic==2.7.0
+
+# CORS support
+python-multipart==0.0.6
+
+# Core system dependencies (same as main system)
+groq==1.1.0
+sentence-transformers==5.2.0
+scipy==1.11.4
+numpy==1.25.0
+python-dotenv==1.0.0
+requests==2.31.0

@@ -1,0 +1,3 @@
+"""
+Core AI components package.
+"""

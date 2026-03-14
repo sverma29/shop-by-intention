@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOP-BY-INTENTION - AI Shopping Assistant</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        button {
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            background-color: var(--secondary-color);
+            cursor: not-allowed;
+        }
+
+        .status-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--success-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .results-section {
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .cart-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .cart-item {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .cart-item h4 {
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+        }
+
+        .cart-item p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .total-cost {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--success-color);
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+
+        .error {
+            color: var(--danger-color);
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .examples {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3ff;
+            border-radius: 5px;
+        }
+
+        .examples h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .example-btn {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 16px;
+            background-color: #fff;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .example-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛒 SHOP-BY-INTENTION</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            AI-powered shopping assistant that understands your intent and finds the perfect products
+        </p>
+
+        <div class="status-section">
+            <div class="status-indicator">
+                <div class="dot"></div>
+                <span>System Status: <strong>Operational</strong></span>
+            </div>
+            <div>
+                <span id="api-status">API: Connected</span>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <input type="text" id="query-input" placeholder="Enter your shopping query (e.g., 'I want a gaming laptop under $1500')" />
+                <button id="submit-btn" onclick="processQuery()">Search</button>
+            </div>
+            
+            <div class="examples">
+                <h3>Try these examples:</h3>
+                <span class="example-btn" onclick="setExample('I want a gaming laptop under $1500')">Gaming Laptop</span>
+                <span class="example-btn" onclick="setExample('I need a cheap camera for photography')">Photography Camera</span>
+                <span class="example-btn" onclick="setExample('I want a portable coding laptop')">Coding Laptop</span>
+                <span class="example-btn" onclick="setExample('Build a home office setup under $1000')">Home Office</span>
+            </div>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            🤖 Processing your query with AI... This may take a moment.
+        </div>
+
+        <div id="error" class="error" style="display: none;"></div>
+
+        <div class="results-section">
+            <div id="intent-result" class="result-card" style="display: none;">
+                <h3>🎯 Detected Intent</h3>
+                <div id="intent-content"></div>
+            </div>
+
+            <div id="cart-result" class="result-card" style="display: none;">
+                <h3>🛒 Recommended Products</h3>
+                <div id="cart-content"></div>
+                <div class="total-cost" id="total-cost"></div>
+            </div>
+
+            <div id="processing-info" class="result-card" style="display: none;">
+                <h3>📊 Processing Information</h3>
+                <div id="processing-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api/v1';
+
+        // Check API status on load
+        window.onload = function() {
+            checkAPIStatus();
+        };
+
+        async function checkAPIStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                if (response.ok) {
+                    document.getElementById('api-status').textContent = 'API: Connected';
+                    document.getElementById('api-status').style.color = '#28a745';
+                } else {
+                    throw new Error('API not responding');
+                }
+            } catch (error) {
+                document.getElementById('api-status').textContent = 'API: Disconnected';
+                document.getElementById('api-status').style.color = '#dc3545';
+                showError('API is not available. Please start the FastAPI server on port 8000.');
+            }
+        }
+
+        function setExample(query) {
+            document.getElementById('query-input').value = query;
+        }
+
+        async function processQuery() {
+            const query = document.getElementById('query-input').value.trim();
+            
+            if (!query) {
+                showError('Please enter a shopping query.');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('submit-btn').disabled = true;
+            clearResults();
+
+            try {
+                const response = await fetch(`${API_BASE}/shop`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ query: query })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                displayResults(result);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Failed to process query. Please check if the API server is running.');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('submit-btn').disabled = false;
+            }
+        }
+
+        function displayResults(result) {
+            // Display intent
+            const intentResult = document.getElementById('intent-result');
+            const intentContent = document.getElementById('intent-content');
+            intentContent.innerHTML = `
+                <p><strong>Category:</strong> ${result.final_intent.category || 'Not specified'}</p>
+                <p><strong>Purpose:</strong> ${result.final_intent.purpose || 'Not specified'}</p>
+                <p><strong>Budget:</strong> $${result.final_intent.budget || 'Not specified'}</p>
+                <p><strong>Preferences:</strong> ${result.final_intent.preferences && result.final_intent.preferences.length > 0 ? result.final_intent.preferences.join(', ') : 'None specified'}</p>
+            `;
+            intentResult.style.display = 'block';
+
+            // Display cart
+            const cartResult = document.getElementById('cart-result');
+            const cartContent = document.getElementById('cart-content');
+            const cartItems = result.final_cart.items || [];
+            
+            if (cartItems.length > 0) {
+                let cartHTML = '<div class="cart-items">';
+                cartItems.forEach(item => {
+                    cartHTML += `
+                        <div class="cart-item">
+                            <h4>${item.name}</h4>
+                            <p><strong>Brand:</strong> ${item.brand}</p>
+                            <p><strong>Category:</strong> ${item.category}</p>
+                            <p><strong>Price:</strong> $${item.price}</p>
+                            <p><strong>Purpose:</strong> ${item.purpose ? item.purpose.join(', ') : 'Not specified'}</p>
+                            ${item.features && item.features.length > 0 ? `<p><strong>Features:</strong> ${item.features.join(', ')}</p>` : ''}
+                        </div>
+                    `;
+                });
+                cartHTML += '</div>';
+                cartContent.innerHTML = cartHTML;
+                
+                // Display total cost
+                document.getElementById('total-cost').textContent = `Total: $${result.final_cart.total_cost.toFixed(2)}`;
+                cartResult.style.display = 'block';
+            } else {
+                cartContent.innerHTML = '<p>No products found matching your criteria.</p>';
+                cartResult.style.display = 'block';
+            }
+
+            // Display processing info
+            const processingResult = document.getElementById('processing-info');
+            const processingContent = document.getElementById('processing-content');
+            processingContent.innerHTML = `
+                <p><strong>Loops completed:</strong> ${result.loop_count}</p>
+                <p><strong>Processing time:</strong> ${result.processing_time.toFixed(2)} seconds</p>
+                <p><strong>Timestamp:</strong> ${new Date(result.timestamp).toLocaleString()}</p>
+            `;
+            processingResult.style.display = 'block';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function clearResults() {
+            document.getElementById('intent-result').style.display = 'none';
+            document.getElementById('cart-result').style.display = 'none';
+            document.getElementById('processing-info').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

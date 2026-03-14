@@ -1,0 +1,312 @@
+[
+    {
+        "id": "LAP001",
+        "category": "laptop",
+        "brand": "Asus",
+        "name": "ROG Strix G15",
+        "price": 1200,
+        "gpu": "RTX 4060",
+        "cpu": "Ryzen 7 6800H",
+        "ram": "16GB",
+        "storage": "512GB SSD",
+        "weight": "1.9kg",
+        "battery": "8h",
+        "screen_size": "15.6 inch",
+        "resolution": "1920x1080",
+        "refresh_rate": "144Hz",
+        "purpose": [
+            "gaming",
+            "content creation"
+        ],
+        "features": [
+            "RGB keyboard",
+            "high refresh rate",
+            "good cooling"
+        ]
+    },
+    {
+        "id": "LAP002",
+        "category": "laptop",
+        "brand": "Acer",
+        "name": "Predator Helios 300",
+        "price": 1400,
+        "gpu": "RTX 4070",
+        "cpu": "Intel i7-12700H",
+        "ram": "16GB",
+        "storage": "1TB SSD",
+        "weight": "2.3kg",
+        "battery": "6h",
+        "screen_size": "15.6 inch",
+        "resolution": "1920x1080",
+        "refresh_rate": "144Hz",
+        "purpose": [
+            "gaming",
+            "high performance"
+        ],
+        "features": [
+            "RGB lighting",
+            "mechanical keyboard",
+            "advanced cooling"
+        ]
+    },
+    {
+        "id": "LAP003",
+        "category": "laptop",
+        "brand": "Dell",
+        "name": "XPS 13",
+        "price": 1100,
+        "gpu": "Intel Iris Xe",
+        "cpu": "Intel i7-1165G7",
+        "ram": "16GB",
+        "storage": "512GB SSD",
+        "weight": "1.2kg",
+        "battery": "12h",
+        "screen_size": "13.4 inch",
+        "resolution": "1920x1200",
+        "refresh_rate": "60Hz",
+        "purpose": [
+            "coding",
+            "travel",
+            "office work"
+        ],
+        "features": [
+            "ultra portable",
+            "long battery",
+            "premium build"
+        ]
+    },
+    {
+        "id": "LAP004",
+        "category": "laptop",
+        "brand": "MacBook",
+        "name": "Air M2",
+        "price": 1300,
+        "gpu": "Apple M2 8-core",
+        "cpu": "Apple M2",
+        "ram": "8GB",
+        "storage": "256GB SSD",
+        "weight": "1.24kg",
+        "battery": "18h",
+        "screen_size": "13.6 inch",
+        "resolution": "2560x1664",
+        "refresh_rate": "60Hz",
+        "purpose": [
+            "coding",
+            "travel",
+            "general use"
+        ],
+        "features": [
+            "excellent battery",
+            "silent operation",
+            "macOS"
+        ]
+    },
+    {
+        "id": "LAP005",
+        "category": "laptop",
+        "brand": "Lenovo",
+        "name": "Legion 5",
+        "price": 1000,
+        "gpu": "RTX 3060",
+        "cpu": "Ryzen 5 6600H",
+        "ram": "8GB",
+        "storage": "512GB SSD",
+        "weight": "2.4kg",
+        "battery": "5h",
+        "screen_size": "15.6 inch",
+        "resolution": "1920x1080",
+        "refresh_rate": "120Hz",
+        "purpose": [
+            "gaming",
+            "budget gaming"
+        ],
+        "features": [
+            "good performance",
+            "affordable",
+            "RGB keyboard"
+        ]
+    },
+    {
+        "id": "CAM001",
+        "category": "camera",
+        "brand": "Canon",
+        "name": "EOS Rebel T7",
+        "price": 500,
+        "type": "DSLR",
+        "megapixels": "24.1MP",
+        "lens_mount": "EF",
+        "video_resolution": "1080p",
+        "screen_size": "3 inch",
+        "purpose": [
+            "photography",
+            "beginner"
+        ],
+        "features": [
+            "easy to use",
+            "good image quality",
+            "interchangeable lenses"
+        ]
+    },
+    {
+        "id": "CAM002",
+        "category": "camera",
+        "brand": "Sony",
+        "name": "Alpha a6000",
+        "price": 650,
+        "type": "Mirrorless",
+        "megapixels": "24.3MP",
+        "lens_mount": "E-mount",
+        "video_resolution": "1080p",
+        "screen_size": "3 inch",
+        "purpose": [
+            "photography",
+            "travel",
+            "vlogging"
+        ],
+        "features": [
+            "fast autofocus",
+            "compact",
+            "good low light performance"
+        ]
+    },
+    {
+        "id": "MON001",
+        "category": "monitor",
+        "brand": "Dell",
+        "name": "UltraSharp U2723QE",
+        "price": 450,
+        "screen_size": "27 inch",
+        "resolution": "3840x2160",
+        "refresh_rate": "60Hz",
+        "panel_type": "IPS",
+        "features": [
+            "4K resolution",
+            "USB-C hub",
+            "color accurate"
+        ]
+    },
+    {
+        "id": "MON002",
+        "category": "monitor",
+        "brand": "ASUS",
+        "name": "TUF Gaming VG249Q",
+        "price": 200,
+        "screen_size": "23.8 inch",
+        "resolution": "1920x1080",
+        "refresh_rate": "144Hz",
+        "panel_type": "IPS",
+        "features": [
+            "high refresh rate",
+            "gaming",
+            "adaptive sync"
+        ]
+    },
+    {
+        "id": "KEY001",
+        "category": "keyboard",
+        "brand": "Logitech",
+        "name": "MX Keys",
+        "price": 120,
+        "type": "Mechanical",
+        "switch_type": "Tactile",
+        "backlight": "White",
+        "connectivity": [
+            "Bluetooth",
+            "USB"
+        ],
+        "features": [
+            "premium build",
+            "multi-device",
+            "backlight"
+        ]
+    },
+    {
+        "id": "KEY002",
+        "category": "keyboard",
+        "brand": "Corsair",
+        "name": "K70 RGB MK.2",
+        "price": 150,
+        "type": "Mechanical",
+        "switch_type": "Linear",
+        "backlight": "RGB",
+        "connectivity": "USB",
+        "features": [
+            "gaming",
+            "RGB lighting",
+            "aluminum frame"
+        ]
+    },
+    {
+        "id": "MOU001",
+        "category": "mouse",
+        "brand": "Logitech",
+        "name": "MX Master 3",
+        "price": 100,
+        "sensor_type": "Laser",
+        "dpi": "8000",
+        "connectivity": [
+            "Bluetooth",
+            "USB"
+        ],
+        "features": [
+            "ergonomic",
+            "multi-device",
+            "scroll wheel"
+        ]
+    },
+    {
+        "id": "MOU002",
+        "category": "mouse",
+        "brand": "Razer",
+        "name": "DeathAdder V2",
+        "price": 60,
+        "sensor_type": "Optical",
+        "dpi": "20000",
+        "connectivity": "USB",
+        "features": [
+            "gaming",
+            "ergonomic",
+            "RGB lighting"
+        ]
+    },
+    {
+        "id": "CHA001",
+        "category": "chair",
+        "brand": "Herman Miller",
+        "name": "Aeron",
+        "price": 1200,
+        "material": "Mesh",
+        "features": [
+            "ergonomic",
+            "adjustable",
+            "premium"
+        ]
+    },
+    {
+        "id": "CHA002",
+        "category": "chair",
+        "brand": "Secretlab",
+        "name": "Titan Evo",
+        "price": 400,
+        "material": "Leather",
+        "features": [
+            "gaming",
+            "adjustable",
+            "comfortable"
+        ]
+    },
+    {
+        "id": "DES001",
+        "category": "desk",
+        "brand": "IKEA",
+        "name": "BEKANT",
+        "price": 250,
+        "material": "Laminate",
+        "dimensions": "160x80x74 cm",
+        "features": [
+            "adjustable height",
+            "spacious",
+            "affordable"
+        ]
+    }
+]

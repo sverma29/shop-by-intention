@@ -1,0 +1,25 @@
+# SHOP-BY-INTENTION System Requirements
+
+# Core AI Dependencies
+groq==1.1.0              # Groq API client for Llama models
+sentence-transformers    # Local embeddings fallback
+faiss-cpu               # Vector search (optional)
+python-dotenv           # Environment variable management
+
+# Core System Dependencies
+numpy                   # Numerical operations
+scipy                   # Scientific computing
+requests                # HTTP requests
+
+# Development and Testing
+pytest                  # Testing framework
+pytest-cov              # Coverage reporting
+black                   # Code formatting
+flake8                  # Linting
+mypy                    # Type checking
+
+# Optional Dependencies for Enhanced Features
+# chromadb              # Alternative vector database
+# pinecone-client       # Cloud vector database
+# openai                # Alternative LLM provider
+# anthropic             # Alternative LLM provider
