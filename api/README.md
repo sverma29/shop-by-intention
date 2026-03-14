@@ -116,6 +116,16 @@ Run benchmark tests.
 }
 ```
 
+**Example Request Body:**
+```json
+{
+  "queries": [
+    "I want a gaming laptop under $1500",
+    "I need a cheap camera for photography"
+  ]
+}
+```
+
 ### GET /api/health
 Simple health check endpoint.
 

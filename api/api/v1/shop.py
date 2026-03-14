@@ -45,19 +45,21 @@ async def process_shopping_query(request: ShopRequest):
 @router.post("/benchmark", response_model=BenchmarkResponse)
 async def run_benchmark(request: BenchmarkRequest):
     """
-    Run benchmark tests on the system.
+    Run benchmark tests on the system with comprehensive evaluation.
     
     Args:
         request: Optional list of queries to test
         
     Returns:
-        Benchmark results and metrics
+        Enhanced benchmark results with evaluation metrics and individual query analysis
     """
     try:
         result = shop_service.run_benchmark(request.queries)
         
         return BenchmarkResponse(
             benchmark_result=result["metrics"],
+            evaluation=result.get("evaluation"),  # New field: evaluation metrics
+            individual_results=result.get("individual_results"),  # New field: detailed query results
             processing_time=result["processing_time"],
             timestamp=result["timestamp"]
         )

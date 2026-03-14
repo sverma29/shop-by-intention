@@ -40,7 +40,9 @@ class HealthResponse(BaseModel):
 
 
 class BenchmarkResponse(BaseModel):
-    """Response model for benchmark results."""
+    """Enhanced response model for benchmark results with evaluation."""
     benchmark_result: Dict[str, Any]
+    evaluation: Optional[Dict[str, Any]] = None  # New field for evaluation metrics
+    individual_results: Optional[List[Dict[str, Any]]] = None  # New field for detailed results
     processing_time: float
     timestamp: str
