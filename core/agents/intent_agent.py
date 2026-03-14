@@ -36,10 +36,10 @@ Extract the following fields:
 - budget: Maximum budget in USD (extract number, ignore currency symbols)
 - preferences: List of specific features or requirements
 - uncertainty: What information is unclear or missing
-D
+
 User Query: "{user_input}"
 
-Return JSON format:
+Return ONLY valid JSON format with no markdown blocks, no intro, no outro:
 {{
   "category": "string or null",
   "purpose": "string or null", 
@@ -71,7 +71,7 @@ Only extract information explicitly mentioned in the query.
             ai_response = self.ai_service.generate_text(
                 prompt=prompt,
                 model=self.config.default_model,
-                temperature=0.3,  # Lower temperature for more deterministic responses
+                temperature=0.1,  # Lower temperature for more deterministic responses
                 max_tokens=500
             )
             
@@ -129,11 +129,24 @@ Only extract information explicitly mentioned in the query.
     def _parse_llm_response(self, response_text: str) -> Dict[str, Any]:
         """Parse LLM response into structured intent data."""
         try:
+            # Strip markdown code blocks if the LLM provided them anyway
+            cleaned = response_text.strip()
+            if cleaned.startswith("```json"):
+                cleaned = cleaned[7:]
+            elif cleaned.startswith("```"):
+                cleaned = cleaned[3:]
+            if cleaned.endswith("```"):
+                cleaned = cleaned[:-3]
+            cleaned = cleaned.strip()
+
             # Try to extract JSON from response
-            json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
+            json_match = re.search(r'\{[\s\S]*\}', cleaned)
             if json_match:
                 json_str = json_match.group()
-                return json.loads(json_str)
+                try:
+                    return json.loads(json_str)
+                except json.JSONDecodeError as json_err:
+                    logger.warning(f"Failed to decode JSON: {json_err}, falling back to pattern matching")
             
             # If JSON parsing fails, try to extract key-value pairs
             intent_data = {
@@ -145,12 +158,12 @@ Only extract information explicitly mentioned in the query.
             }
             
             # Simple pattern matching for fallback
-            lines = response_text.split('\n')
+            lines = cleaned.split('\n')
             for line in lines:
                 line = line.strip()
                 if ':' in line:
                     key, value = line.split(':', 1)
-                    key = key.strip().lower()
+                    key = key.strip().lower().strip('"\'')
                     value = value.strip().strip('"\'')
                     
                     if key == 'category':
@@ -159,7 +172,8 @@ Only extract information explicitly mentioned in the query.
                         intent_data["purpose"] = value if value.lower() != 'null' else None
                     elif key == 'budget':
                         try:
-                            intent_data["budget"] = float(re.findall(r'\d+', value)[0])
+                            digits = re.findall(r'\d+', value)
+                            intent_data["budget"] = float(digits[0]) if digits else None
                         except:
                             intent_data["budget"] = None
                     elif key == 'preferences':
