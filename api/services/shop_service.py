@@ -23,7 +23,8 @@ from core.agents.reasoning_agent import reason_products
 from core.agents.cart_agent import build_cart
 from core.agents.evaluation_agent import evaluate_cart
 from core.loops.loop_controller import control_loop, reset_loop
-from core.events.event_logger import get_event_statistics, clear_logs
+from core.events.event_logger import get_event_statistics
+from core.events.event_context import set_session_id
 
 
 class ShopService:
@@ -46,7 +47,9 @@ class ShopService:
         """
         # Reset for new query
         reset_loop()
-        clear_logs()
+        
+        # Initialize context trace session
+        trace_id = set_session_id(session_id)
         
         # Initialize state
         intent_state: Optional[Dict[str, Any]] = None

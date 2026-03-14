@@ -412,6 +412,7 @@
                 cartHTML += `
                     <div class="cart-item ${selectedClass}" onclick="window.toggleProductSelection(${index})" style="cursor: pointer;" title="Click to select/deselect">
                         <h4>${item.name}</h4>
+                        <p><strong>ID:</strong> ${item.id}</p>
                         <p><strong>Brand:</strong> ${item.brand}</p>
                         <p><strong>Category:</strong> ${item.category}</p>
                         <p><strong>Price:</strong> $${price.toFixed(2)}</p>

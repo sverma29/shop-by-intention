@@ -230,11 +230,6 @@ Features: {features}
                     selected_products.append(product)
                     break
         
-        # If we didn't find enough products, add more from candidates
-        if len(selected_products) < 3:
-            remaining = [p for p in candidates if p["id"] not in selected_ids]
-            selected_products.extend(remaining[:3 - len(selected_products)])
-        
         return selected_products
     
     def _log_reasoning_event(self, intent_state: Dict[str, Any], candidates: List[Dict[str, Any]], reasoning_result: Dict[str, Any], ai_response):

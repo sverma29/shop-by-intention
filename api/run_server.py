@@ -17,7 +17,7 @@ def main():
     """Start the FastAPI server."""
     print("🚀 Starting SHOP-BY-INTENTION API Server...")
     print("📍 Server will be available at: http://localhost:8000")
-    print("🌐 Frontend interface: http://localhost:8000/frontend.html")
+    print("🌐 Frontend interface: http://localhost:8000/")
     print("📋 API documentation: http://localhost:8000/docs")
     print("🔍 Interactive docs: http://localhost:8000/redoc")
     print()

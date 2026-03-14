@@ -1,25 +1,17 @@
-# SHOP-BY-INTENTION System Requirements
+# FastAPI and web server dependencies
+fastapi==0.135.1
+uvicorn[standard]==0.41.0
 
-# Core AI Dependencies
-groq==1.1.0              # Groq API client for Llama models
-sentence-transformers    # Local embeddings fallback
-faiss-cpu               # Vector search (optional)
-python-dotenv           # Environment variable management
+# Pydantic for data validation
+pydantic==2.7.0
 
-# Core System Dependencies
-numpy                   # Numerical operations
-scipy                   # Scientific computing
-requests                # HTTP requests
+# CORS support
+python-multipart==0.0.6
 
-# Development and Testing
-pytest                  # Testing framework
-pytest-cov              # Coverage reporting
-black                   # Code formatting
-flake8                  # Linting
-mypy                    # Type checking
-
-# Optional Dependencies for Enhanced Features
-# chromadb              # Alternative vector database
-# pinecone-client       # Cloud vector database
-# openai                # Alternative LLM provider
-# anthropic             # Alternative LLM provider
+# Core system dependencies (same as main system)
+groq==1.1.0
+sentence-transformers==5.2.0
+scipy==1.11.4
+numpy==1.25.0
+python-dotenv==1.0.0
+requests==2.31.0

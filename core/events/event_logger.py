@@ -94,8 +94,9 @@ class EventLogger:
             for line in f:
                 try:
                     event_data = json.loads(line.strip())
-                    # Check if session_id is in input_state, metadata, or output_state
+                    # Check if session_id is directly on event or inside metadata
                     evt_session = (
+                        event_data.get('session_id') or
                         event_data.get('input_state', {}).get('session_id') or
                         event_data.get('metadata', {}).get('session_id') or
                         event_data.get('output_state', {}).get('session_id')
