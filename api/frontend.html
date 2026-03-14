@@ -141,6 +141,14 @@
             border-radius: 5px;
             border: 1px solid #ddd;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .cart-item.selected {
+            background-color: #f0f8ff;
+            border: 2px solid var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
 
         .cart-item h4 {
@@ -315,7 +323,16 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    let errorMessage = `HTTP error! status: ${response.status}`;
+                    try {
+                        const errorData = await response.json();
+                        if (errorData && errorData.detail) {
+                            errorMessage = errorData.detail;
+                        }
+                    } catch (e) {
+                        // Keep generic message if json parsing fails
+                    }
+                    throw new Error(errorMessage);
                 }
 
                 const result = await response.json();
@@ -323,12 +340,14 @@
 
             } catch (error) {
                 console.error('Error:', error);
-                showError('Failed to process query. Please check if the API server is running.');
+                showError(error.message || 'Failed to process query. Please check if the API server is running.');
             } finally {
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('submit-btn').disabled = false;
             }
         }
+
+        window.globalCartItems = [];
 
         function displayResults(result) {
             // Display intent
@@ -345,30 +364,19 @@
             // Display cart
             const cartResult = document.getElementById('cart-result');
             const cartContent = document.getElementById('cart-content');
-            const cartItems = result.final_cart.items || [];
+            window.globalCartItems = result.final_cart.items || [];
             
-            if (cartItems.length > 0) {
-                let cartHTML = '<div class="cart-items">';
-                cartItems.forEach(item => {
-                    cartHTML += `
-                        <div class="cart-item">
-                            <h4>${item.name}</h4>
-                            <p><strong>Brand:</strong> ${item.brand}</p>
-                            <p><strong>Category:</strong> ${item.category}</p>
-                            <p><strong>Price:</strong> $${item.price}</p>
-                            <p><strong>Purpose:</strong> ${item.purpose ? item.purpose.join(', ') : 'Not specified'}</p>
-                            ${item.features && item.features.length > 0 ? `<p><strong>Features:</strong> ${item.features.join(', ')}</p>` : ''}
-                        </div>
-                    `;
+            if (window.globalCartItems.length > 0) {
+                // By default, select the first item
+                window.globalCartItems.forEach((item, index) => {
+                    item.selected = (index === 0);
                 });
-                cartHTML += '</div>';
-                cartContent.innerHTML = cartHTML;
                 
-                // Display total cost
-                document.getElementById('total-cost').textContent = `Total: $${result.final_cart.total_cost.toFixed(2)}`;
+                window.renderCart();
                 cartResult.style.display = 'block';
             } else {
                 cartContent.innerHTML = '<p>No products found matching your criteria.</p>';
+                document.getElementById('total-cost').textContent = '';
                 cartResult.style.display = 'block';
             }
 
@@ -382,6 +390,41 @@
             `;
             processingResult.style.display = 'block';
         }
+
+        window.toggleProductSelection = function(index) {
+            if (window.globalCartItems && window.globalCartItems[index]) {
+                window.globalCartItems[index].selected = !window.globalCartItems[index].selected;
+                window.renderCart();
+            }
+        };
+
+        window.renderCart = function() {
+            const cartContent = document.getElementById('cart-content');
+            let cartHTML = '<div class="cart-items">';
+            let totalCost = 0;
+            
+            window.globalCartItems.forEach((item, index) => {
+                let price = parseFloat(item.price) || 0;
+                if (item.selected) {
+                    totalCost += price;
+                }
+                const selectedClass = item.selected ? 'selected' : '';
+                cartHTML += `
+                    <div class="cart-item ${selectedClass}" onclick="window.toggleProductSelection(${index})" style="cursor: pointer;" title="Click to select/deselect">
+                        <h4>${item.name}</h4>
+                        <p><strong>Brand:</strong> ${item.brand}</p>
+                        <p><strong>Category:</strong> ${item.category}</p>
+                        <p><strong>Price:</strong> $${price.toFixed(2)}</p>
+                        <p><strong>Purpose:</strong> ${item.purpose ? item.purpose.join(', ') : 'Not specified'}</p>
+                        ${item.features && item.features.length > 0 ? `<p><strong>Features:</strong> ${item.features.join(', ')}</p>` : ''}
+                    </div>
+                `;
+            });
+            cartHTML += '</div>';
+            cartContent.innerHTML = cartHTML;
+            
+            document.getElementById('total-cost').textContent = `Total: $${totalCost.toFixed(2)}`;
+        };
 
         function showError(message) {
             const errorDiv = document.getElementById('error');

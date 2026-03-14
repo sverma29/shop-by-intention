@@ -57,7 +57,11 @@ class GroqClient:
         
         self.default_model = default_model
         self.client = Groq(api_key=self.api_key)
-        self.rate_limit_delay = 5.0  # seconds between requests
+        
+        from core.config.groq_config import get_config
+        config = get_config()
+        self.rate_limit_delay = config.rate_limit_delay
+        
         self.last_request_time = 0.0
         
         logger.info(f"Initialized Groq client with model: {self.default_model}")
@@ -96,49 +100,63 @@ class GroqClient:
         Returns:
             GroqResponse object with the completion
         """
-        self._enforce_rate_limit()
+        from core.config.groq_config import get_config
+        config = get_config()
+        max_retries = config.max_retries
         
         model = model or self.default_model
+        last_error = None
         
-        try:
-            start_time = time.time()
-            
-            response = self.client.chat.completions.create(
-                messages=messages,
-                model=model,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                top_p=top_p,
-                stream=stream
-            )
-            
-            end_time = time.time()
-            response_time = end_time - start_time
-            
-            if stream:
-                # Handle streaming response
-                content = ""
-                for chunk in response:
-                    if chunk.choices[0].delta.content:
-                        content += chunk.choices[0].delta.content
-            else:
-                content = response.choices[0].message.content
-            
-            return GroqResponse(
-                content=content,
-                model=response.model,
-                usage={
-                    "prompt_tokens": response.usage.prompt_tokens,
-                    "completion_tokens": response.usage.completion_tokens,
-                    "total_tokens": response.usage.total_tokens
-                },
-                finish_reason=response.choices[0].finish_reason,
-                response_time=response_time
-            )
-            
-        except Exception as e:
-            logger.error(f"Groq API error: {e}")
-            raise
+        for attempt in range(max_retries):
+            try:
+                self._enforce_rate_limit()
+                
+                start_time = time.time()
+                
+                response = self.client.chat.completions.create(
+                    messages=messages,
+                    model=model,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    top_p=top_p,
+                    stream=stream
+                )
+                
+                end_time = time.time()
+                response_time = end_time - start_time
+                
+                if stream:
+                    # Handle streaming response
+                    content = ""
+                    for chunk in response:
+                        if chunk.choices[0].delta.content:
+                            content += chunk.choices[0].delta.content
+                else:
+                    content = response.choices[0].message.content
+                
+                return GroqResponse(
+                    content=content,
+                    model=response.model,
+                    usage={
+                        "prompt_tokens": getattr(response.usage, "prompt_tokens", 0),
+                        "completion_tokens": getattr(response.usage, "completion_tokens", 0),
+                        "total_tokens": getattr(response.usage, "total_tokens", 0)
+                    },
+                    finish_reason=response.choices[0].finish_reason,
+                    response_time=response_time
+                )
+                
+            except Exception as e:
+                last_error = e
+                logger.error(f"Groq API error on attempt {attempt + 1}/{max_retries}: {e}")
+                if attempt < max_retries - 1:
+                    sleep_time = config.rate_limit_delay * (2 ** attempt)
+                    time.sleep(sleep_time)
+                    
+        # If all retries failed, raise an informative error to trigger fallback mechanism
+        error_msg = f"Groq API failed after {max_retries} attempts. Last error: {str(last_error)}"
+        logger.error(error_msg)
+        raise Exception(error_msg)
     
     def generate_embedding(self, text: str, model: str = "all-MiniLM-L6-v2") -> List[float]:
         """

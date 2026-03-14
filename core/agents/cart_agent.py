@@ -34,6 +34,9 @@ class CartAgent:
         Returns:
             Updated cart state
         """
+        # Ensure the cart starts clean to avoid duplicate accumulation in evaluation loops
+        self.cart = CartState()
+
         selected_products = reasoning_result.get("selected_products", [])
         
         if not selected_products:
@@ -95,16 +98,12 @@ class CartAgent:
         category = intent_state.get("category")
         purpose = intent_state.get("purpose")
         
-        # Single item intent
-        if category in ["laptop", "camera", "monitor", "keyboard", "mouse"]:
-            return "single_item"
-        
         # Setup intent
         if category == "office setup" or purpose == "home office":
             return "setup"
         
-        # Default to single item
-        return "single_item"
+        # Default to multiple items
+        return "multiple_items"
     
     def _replace_cart_with_single_item(self, product: Dict[str, Any]):
         """Replace cart with a single item."""
