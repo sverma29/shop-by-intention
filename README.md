@@ -63,6 +63,7 @@ Process a shopping query through the agentic system.
 
 ### POST /api/benchmark
 Run benchmark tests. Ensure queries are taken from data/benchmark_queries.json for proper evaluation as a reference.
+Benchmark results are appended to evaluation/benchmark_results.json
 
 **Request Body (optional):**
 ```json
