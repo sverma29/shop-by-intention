@@ -32,13 +32,13 @@ graph TD
         Cart --> Eval[Evaluation Agent]
     end
     
-    API --> Agentic Loop
+    API --> AgenticLoop
     
     subgraph State & Memory
         Taxonomy[(Taxonomy Limits)] -.-> Intent
         VectorDb[(Sentence Transformers / Catalog)] -.-> Retrieval
         CartState[(Global Cart State)] <--> Cart
-        EventLog[(ThreadLocal Event Trace ID)] -.-> Agentic Loop
+        EventLog[(ThreadLocal Event Trace ID)] -.-> AgenticLoop
     end
     
     Eval -- "Refine/Loop" --> Intent
@@ -48,10 +48,16 @@ graph TD
 ### End-to-End Data Flow
 1. **Ingestion:** User submits a natural language context query.
 2. **Context Injection:** `event_context` generates a unique `session_id` to structurally bind all telemetry across the entire request lifecycle.
-3. **Intent Parsing:** The query is bounded against a strict `taxonomy.json` configuration config to extract Category, Purpose, Preferences, and Budget without hallucinated tags.
-4. **Vector Retrieval:** The parsed intent builds a semantic query string. Local models calculate cosine similarity against catalog items, filtering explicitly requested categorical bounds first.
-5. **Logic & Cart Building:** Candidates are evaluated for relevance and budgetary compliance. Approved items are aggregated into the `CartState`.
-6. **Evaluation & Looping:** The final cart is assessed. If the cart critically fails the intent (e.g., missing a core "setup" piece), an `AgenticEvent` triggers the loop to restart with the refined intent.
+3. **Intent Parsing (LLM Attributes Extraction):** The raw query is routed to the `Intent Agent`. The LLM processes the unstructured text against a strict taxonomy prompt to cleanly extract structured `Category`, `Purpose`, `Preferences`, and `Budget` attributes without allowing hallucinated tags.
+4. **Vector Retrieval:** The extracted intent attributes build a semantic query string. Local models calculate cosine similarity against catalog items, filtering explicit categorical boundaries first.
+5. **Logic & Cart Building:** The `Reasoning Agent` logically evaluates retrieved item relevance and budgetary compliance, discarding expensive conflicts. The `Cart Agent` safely aggregates the valid items into the overarching global `CartState`.
+6. **Evaluation & Loop Orchestration:** The `Evaluation Agent` assesses the final cart against the parsed intent. The system relies entirely on autonomous loop orchestration to iteratively satisfy requests. If the cart critically fails the intent configuration (e.g., missing a core "setup" piece), an `AgenticEvent` triggers the exact loop to restart instantly with refined LLM instructions. If it passes, it breaks the loop for frontend execution.
+7. **Fallback Mechanism:** To preserve system stability, the framework strictly enforces a maximum loop iteration timeout (e.g., 5 cycles). If the LLM enters infinite hallucination loops or repeatedly exceeds the budget, the fallback loop orchestrator breaks out, terminating execution cleanly and optionally returning the partially fulfilled `CartState` mapping.
+
+### Memory, Retrieval, and Tool Usage
+*   **Memory:** The overall system handles two kinds of memory. Transient iteration memory is handled via the live `CartState` (items purchased so far) and the `IntentState` (what we are looking for), preserving context seamlessly across dynamic loop restarts. Long-term memory tracking is appended to ThreadLocal `event_logs.jsonl` files.
+*   **Retrieval:** The ecosystem strictly relies upon offline `sentence-transformers` models calculating semantic dense vector embedding caches directly against product representation spaces.
+*   **Tools:** The framework utilizes custom pythonic orchestration tools for mathematical accounting (loop execution counts, budget parsing, math validation). LLMs operate solely as extraction and reasoning decision hubs rather than actively calling functional API actions natively.
 
 ---
 
@@ -120,7 +126,15 @@ stateDiagram-v2
 *   **Events Terminating Execution:** `CONTEXT_ACCEPTED` indicates the critic agent is satisfied, immediately emitting `TASK_TERMINATED` to break the looping iteration and resolve the HTTP response. If the `max_loops` threshold is breached without success, `TASK_TERMINATED` is forced.
 
 ### Justification of Events
-Logging purely unstructured text disables system observability. The specific taxonomy of events (`GOAL_CONFLICT_DETECTED`, `CART_STABLE`) allows developers to programmatically calculate *where* the AI specifically failed. If a query constantly loops, analyzing the `event_logs.jsonl` immediately reveals if the Retrieval Agent failed to find stock (`RETRIEVAL_STRATEGY_SELECTED` returning empty) or if the Cart Agent mathematically bottlenecked on price (`GOAL_CONFLICT_DETECTED`).
+### Justification for Why Each Event Exists
+Logging purely unstructured text disables system observability. A granular event taxonomy explicitly guarantees trace debugging and metric calculation:
+*   **`INTENT_PARSED` / `INTENT_UNCERTAIN`:** Exists to definitively track whether the LLM successfully extracted the user's need or stalled on vague context.
+*   **`RETRIEVAL_STRATEGY_SELECTED`:** Exists to log the exact vector math space used to fetch items, providing a debug trail for empty searches.
+*   **`REASONING_PATH_CHOSEN` / `GOAL_CONFLICT_DETECTED`:** Exists to expose the LLM's logical deductions (why it picked a product natively, or why it rejected one due to mathematical budget conflicts).
+*   **`CART_UPDATED` / `CART_STABLE`:** Exists to capture sequential state checkpoints, allowing engineers to replay cart addition logic.
+*   **`CONTEXT_ACCEPTED` / `CONTEXT_REJECTED`:** Exists exclusively as the boolean trigger flag mechanism controlling the loop orchestrator, verifying total system success.
+*   **`LOOP_TRIGGERED` / `INTENT_REFINED`:** Exists to capture efficiency metrics measuring how aggressively the LLM had to iterate to fulfill the query criteria.
+*   **`TASK_TERMINATED`:** Exists as the hard session limit indicating the synchronous request has formally ended to release threadlocks.
 
 ---
 
@@ -130,6 +144,7 @@ Logging purely unstructured text disables system observability. The specific tax
 1.  **Intent Understanding:** Did the system rigidly adhere to taxonomy configurations without hallucinating out-of-bounds parameters?
 2.  **Recommendation Quality:** Are the end-products semantically linked to the core purpose? (e.g. not recommending generic wired mice for a "gaming" request).
 3.  **Cart Stability & Logic:** Proper mathematical adherence. Does the cart sum total rigorously respect the extracted `budget` constraint without exception?
+4.  **Loop Efficiency:** How many autonomous cycles did the orchestration loop demand to resolve an abstract problem statement before fulfilling criteria and breaking cleanly?
 
 ### Why were these metrics chosen?
 The metrics explicitly measure architectural discipline over "creative" convenience. LLMs are naturally eager to please and will hallucinate solutions to bridge bad logic. By enforcing strict intent bounds (no hallucinated features) and strict logic bounds (budget), we force the system to evaluate its *reasoning* capability rather than its text-generation capability.
@@ -143,6 +158,7 @@ The metrics explicitly measure architectural discipline over "creative" convenie
 ### Why alternatives were NOT chosen
 *   **Accuracy vs Usefulness:** We did not evaluate based purely on "cosine similarity distance" (Accuracy). Similarity algorithms will recommend a $4000 camera for a "cheap photography camera" request because of keyword density. We evaluate based on structural mathematical compliance (Usefulness).
 *   **Automated vs Human Evaluation:** We exclusively utilize Automated Multi-Agent QA metrics (`Evaluation Agent`) rather than Human-In-The-Loop evaluation. While humans assess aesthetic quality better, agentic scale testing requires thousands of automated, programmatic loop assertions.
+*   **Offline vs Online Evaluation:** Real-time production A/B systems prioritize user "click-rate" (online tracking), but offline baseline evaluation against strict JSON datasets guarantees predictable logic iteration stability without polluting metrics arrays with arbitrary UI layout noise.
 
 ---
 
@@ -165,7 +181,9 @@ The metrics explicitly measure architectural discipline over "creative" convenie
 *   **The Retrieval Agent** is the current bottleneck. By relying on simple `sentence-transformers` vector search, it occasionally pulls highly irrelevant items just because their string composition is dense. Integrating a specialized Ranker model or moving to a dedicated sparse-dense dual retrieval system (like Pinecone) would optimize speed.
 
 ### Event Telemetry Optimization
-*   `RETRIEVAL_STRATEGY_SELECTED` is incredibly noisy in the JSONL output because it logs the entire raw string array of retrieved catalog products. This bloats the file instantly. The event payload should be reduced to logging purely product IDs and confidence scores instead of the entire catalog JSON dicts.
+### Event Telemetry Optimization & New Metrics
+*   **Noisy Events:** `RETRIEVAL_STRATEGY_SELECTED` is incredibly noisy in the JSONL output because it logs the entire raw string array of retrieved catalog products. This bloats the file instantly. The event payload should be reduced to logging purely product IDs and confidence scores instead of the entire catalog JSON dicts.
+*   **Additional Metrics Needed:** We need a "Semantic Drift Score" to quantify how far the refined orchestrator loops travel sequentially away from the initial unguided user prompt constraints. Secondly, a definitive "Hallucination Rejection Rate" to mathematically isolate exactly how frequently the local LLM mistakenly tries to disregard bounds configurations but was forced into line constraints by validation parsers.
 
 ### Expected Scaling
 To scale to production:
