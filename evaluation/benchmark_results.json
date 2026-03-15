@@ -1,0 +1,363 @@
+[
+  {
+    "metrics": {
+      "total_queries": 3,
+      "successful_completions": 3,
+      "average_loops": 1.0,
+      "average_processing_time": 15.84976593653361,
+      "average_cart_value": 1148.6666666666667
+    },
+    "evaluation": {
+      "overall_accuracy": 0.77,
+      "category_accuracy": 0.67,
+      "budget_compliance": 0.67,
+      "product_relevance": 1.0,
+      "completeness_score": 0.77
+    },
+    "individual_results": [
+      {
+        "query": "I want a tablet for digital art with an AMOLED screen",
+        "expected": {
+          "category": "tablet",
+          "purpose": "digital art",
+          "budget": null,
+          "preferences": [
+            "AMOLED screen"
+          ],
+          "uncertainty": "budget"
+        },
+        "actual": {
+          "user_query": "I want a tablet for digital art with an AMOLED screen",
+          "final_intent": {
+            "category": "tablet",
+            "purpose": "digital art",
+            "budget": null,
+            "preferences": [
+              "AMOLED screen"
+            ],
+            "uncertainty": null
+          },
+          "final_cart": {
+            "items": [
+              {
+                "id": "TAB002",
+                "category": "tablet",
+                "brand": "Samsung",
+                "name": "Galaxy Tab S9",
+                "price": 799,
+                "storage": "128GB",
+                "screen_size": "11 inch",
+                "purpose": [
+                  "media consumption",
+                  "drawing",
+                  "general use"
+                ],
+                "features": [
+                  "AMOLED screen",
+                  "S-Pen included",
+                  "IP68 water resistant"
+                ]
+              },
+              {
+                "id": "TAB001",
+                "category": "tablet",
+                "brand": "Apple",
+                "name": "iPad Pro 12.9 (M2)",
+                "price": 1099,
+                "storage": "256GB",
+                "screen_size": "12.9 inch",
+                "purpose": [
+                  "digital art",
+                  "video editing",
+                  "laptop replacement"
+                ],
+                "features": [
+                  "mini-LED display",
+                  "apple pencil hover",
+                  "thunderbolt"
+                ]
+              }
+            ],
+            "total_cost": 1898.0,
+            "is_stable": false
+          },
+          "loop_count": 1,
+          "processing_time": 11.078459978103638,
+          "timestamp": "2026-03-15T06:46:51.438243"
+        },
+        "evaluation": {
+          "category_match": true,
+          "budget_compliant": true,
+          "products_match": true,
+          "score": 1.0,
+          "issues": []
+        }
+      },
+      {
+        "query": "I need an easy to use camera for photography",
+        "expected": {
+          "category": "camera",
+          "purpose": "photography",
+          "budget": 600,
+          "preferences": [
+            "easy to use"
+          ],
+          "uncertainty": null
+        },
+        "actual": {
+          "user_query": "I need an easy to use camera for photography",
+          "final_intent": {
+            "category": "camera",
+            "purpose": "photography",
+            "budget": null,
+            "preferences": [
+              "easy to use"
+            ],
+            "uncertainty": null
+          },
+          "final_cart": {
+            "items": [
+              {
+                "id": "CAM001",
+                "category": "camera",
+                "brand": "Canon",
+                "name": "EOS Rebel T7",
+                "price": 500,
+                "type": "DSLR",
+                "megapixels": "24.1MP",
+                "lens_mount": "EF",
+                "video_resolution": "1080p",
+                "screen_size": "3 inch",
+                "purpose": [
+                  "photography",
+                  "beginner"
+                ],
+                "features": [
+                  "easy to use",
+                  "good image quality",
+                  "interchangeable lenses"
+                ]
+              },
+              {
+                "id": "CAM002",
+                "category": "camera",
+                "brand": "Sony",
+                "name": "Alpha a6000",
+                "price": 650,
+                "type": "Mirrorless",
+                "megapixels": "24.3MP",
+                "lens_mount": "E-mount",
+                "video_resolution": "1080p",
+                "screen_size": "3 inch",
+                "purpose": [
+                  "photography",
+                  "travel",
+                  "vlogging"
+                ],
+                "features": [
+                  "fast autofocus",
+                  "compact",
+                  "good low light performance"
+                ]
+              }
+            ],
+            "total_cost": 1150.0,
+            "is_stable": false
+          },
+          "loop_count": 1,
+          "processing_time": 14.890729904174805,
+          "timestamp": "2026-03-15T06:47:06.342164"
+        },
+        "evaluation": {
+          "category_match": true,
+          "budget_compliant": false,
+          "products_match": true,
+          "score": 0.7,
+          "issues": [
+            "Budget exceeded - cart total exceeds specified budget"
+          ]
+        }
+      },
+      {
+        "query": "I need a pair of lightweight headphones for travel with industry-leading ANC",
+        "expected": {
+          "category": "headphones",
+          "purpose": "travel",
+          "budget": null,
+          "preferences": [
+            "lightweight",
+            "industry-leading ANC"
+          ],
+          "uncertainty": "budget"
+        },
+        "actual": {
+          "user_query": "I need a pair of lightweight headphones for travel with industry-leading ANC",
+          "final_intent": {
+            "category": null,
+            "purpose": null,
+            "budget": null,
+            "preferences": [
+              "lightweight",
+              "industry-leading ANC"
+            ],
+            "uncertainty": null
+          },
+          "final_cart": {
+            "items": [
+              {
+                "id": "HDP001",
+                "category": "headphones",
+                "brand": "Sony",
+                "name": "WH-1000XM5",
+                "price": 398,
+                "type": "Over-Ear",
+                "connectivity": [
+                  "Bluetooth",
+                  "3.5mm"
+                ],
+                "purpose": [
+                  "travel",
+                  "music",
+                  "noise cancellation"
+                ],
+                "features": [
+                  "industry-leading ANC",
+                  "lightweight",
+                  "touch controls"
+                ]
+              }
+            ],
+            "total_cost": 398.0,
+            "is_stable": false
+          },
+          "loop_count": 1,
+          "processing_time": 21.580107927322388,
+          "timestamp": "2026-03-15T06:47:27.936213"
+        },
+        "evaluation": {
+          "category_match": false,
+          "budget_compliant": true,
+          "products_match": true,
+          "score": 0.6,
+          "issues": [
+            "Category mismatch - system identified wrong product category"
+          ]
+        }
+      }
+    ],
+    "processing_time": 47.58470892906189,
+    "timestamp": "2026-03-15T06:47:27.936213"
+  },
+  {
+    "metrics": {
+      "total_queries": 1,
+      "successful_completions": 1,
+      "average_loops": 5.0,
+      "average_processing_time": 80.82810044288635,
+      "average_cart_value": 2600.0
+    },
+    "evaluation": {
+      "overall_accuracy": 0.7,
+      "category_accuracy": 1.0,
+      "budget_compliance": 0.0,
+      "product_relevance": 1.0,
+      "completeness_score": 0.7
+    },
+    "individual_results": [
+      {
+        "query": "I want a gaming laptop under $1500 with a high refresh rate",
+        "expected": {
+          "category": "laptop",
+          "purpose": "gaming",
+          "budget": 1500,
+          "preferences": [
+            "high refresh rate"
+          ],
+          "uncertainty": null
+        },
+        "actual": {
+          "user_query": "I want a gaming laptop under $1500 with a high refresh rate",
+          "final_intent": {
+            "category": "laptop",
+            "purpose": "gaming",
+            "budget": 1500,
+            "preferences": [
+              "high refresh rate"
+            ],
+            "uncertainty": null
+          },
+          "final_cart": {
+            "items": [
+              {
+                "id": "LAP002",
+                "category": "laptop",
+                "brand": "Acer",
+                "name": "Predator Helios 300",
+                "price": 1400,
+                "gpu": "RTX 4070",
+                "cpu": "Intel i7-12700H",
+                "ram": "16GB",
+                "storage": "1TB SSD",
+                "weight": "2.3kg",
+                "battery": "6h",
+                "screen_size": "15.6 inch",
+                "resolution": "1920x1080",
+                "refresh_rate": "144Hz",
+                "purpose": [
+                  "gaming",
+                  "high performance"
+                ],
+                "features": [
+                  "RGB lighting",
+                  "mechanical keyboard",
+                  "advanced cooling"
+                ]
+              },
+              {
+                "id": "LAP001",
+                "category": "laptop",
+                "brand": "Asus",
+                "name": "ROG Strix G15",
+                "price": 1200,
+                "gpu": "RTX 4060",
+                "cpu": "Ryzen 7 6800H",
+                "ram": "16GB",
+                "storage": "512GB SSD",
+                "weight": "1.9kg",
+                "battery": "8h",
+                "screen_size": "15.6 inch",
+                "resolution": "1920x1080",
+                "refresh_rate": "144Hz",
+                "purpose": [
+                  "gaming",
+                  "content creation"
+                ],
+                "features": [
+                  "RGB keyboard",
+                  "high refresh rate",
+                  "good cooling"
+                ]
+              }
+            ],
+            "total_cost": 2600.0,
+            "is_stable": false
+          },
+          "loop_count": 5,
+          "processing_time": 80.82810044288635,
+          "timestamp": "2026-03-15T06:50:45.195517"
+        },
+        "evaluation": {
+          "category_match": true,
+          "budget_compliant": false,
+          "products_match": true,
+          "score": 0.7,
+          "issues": [
+            "Budget exceeded - cart total exceeds specified budget"
+          ]
+        }
+      }
+    ],
+    "processing_time": 80.84919857978821,
+    "timestamp": "2026-03-15T06:50:45.195517"
+  }
+]

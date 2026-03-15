@@ -120,8 +120,9 @@ Run benchmark tests.
 ```json
 {
   "queries": [
-    "I want a gaming laptop under $1500",
-    "I need a cheap camera for photography"
+    "I want a tablet for digital art with an AMOLED screen",
+    "I need an easy to use camera for photography",
+    "I need a pair of lightweight headphones for travel with industry-leading ANC"
   ]
 }
 ```

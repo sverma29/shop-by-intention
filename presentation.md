@@ -169,10 +169,9 @@ The metrics explicitly measure architectural discipline over "creative" convenie
 *   System query resolution averages 1.2 loops. Single-item queries resolve immediately, while cross-category "setup" queries predictably trigger memory refinement loops as the system builds the cart piecewise.
 
 ### Qualitative Examples & Failure Cases
-**Emergent Behavior:** When tasked to build an "Apple ecosystem travel setup", the LLM correctly mapped intent strictly to `"macOS"` and `"travel"`. The reasoning logic autonomously discarded a high-powered Windows gaming laptop entirely on its own merit, prioritizing an iPad and an iPhone combo to respect the ecosystem and portability bounds.
+**Emergent Behavior:** When queried for a `"gaming laptop under $1500 with a high refresh rate"`, the system exhibited emergent semantic extraction. Without any hardcoded technical dictionaries linking consumer phrases to hardware specs, the LLM successfully interpreted the abstract human preference `"high refresh rate"` directly to the technical footprint `"144Hz"` inside the catalog's feature arrays. It autonomously identified highly accurate semantic matches like the Acer Predator Helios 300 and Asus ROG Strix G15.
 
-**Failure Cases:** "Over-constrained" setups. If a user queries "A 4K monitor and mechanical keyboard under $100", the Retrieval Agent finds candidates, but the Cart Agent mathematically deadlocks and rejects both items. The system loops infinitely until it hits `max_loops = 5` and returns an empty cart.
-
+**Failure Cases ("Category Duplication Deadlock"):** This exact same `"gaming laptop"` query perfectly illustrates an orchestration failure edge-case. Because the user didn't explicitly restrict the quantity to a *single* item, the Cart Agent eagerly added *both* top-ranked 144Hz gaming laptops to the cart. This caused the cart total to hit $2600, violently breaching the $1500 macro budget. The Evaluation Critic correctly rejected the cart for budget non-compliance (`is_stable: false`), but the agents deadlocked trying to resolve the item count conflict natively, eventually maxing out the safety limit (`loop_count: 5`) and failing forcefully.
 ---
 
 ## Section 7: Improvements & Future Work

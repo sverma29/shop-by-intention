@@ -5,6 +5,7 @@ Shop service for handling shopping queries through the agentic system.
 import time
 import sys
 import os
+import json
 from typing import Dict, Any, Optional, List
 from datetime import datetime
 
@@ -388,14 +389,42 @@ class ShopService:
         # Calculate evaluation metrics
         evaluation_metrics = self._calculate_evaluation_metrics(evaluations)
         
-        return {
+        result_data = {
             "metrics": metrics,
             "evaluation": evaluation_metrics,
             "individual_results": evaluations,
             "processing_time": processing_time,
             "timestamp": datetime.utcnow().isoformat()
         }
-
+        
+        # Append results to evaluation JSON
+        try:
+            eval_dir = os.path.join(
+                os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+                "evaluation"
+            )
+            os.makedirs(eval_dir, exist_ok=True)
+            eval_file = os.path.join(eval_dir, "benchmark_results.json")
+            
+            all_results = []
+            if os.path.exists(eval_file):
+                try:
+                    with open(eval_file, "r") as f:
+                        all_results = json.load(f)
+                        if not isinstance(all_results, list):
+                            all_results = [all_results]
+                except json.JSONDecodeError:
+                    pass
+                    
+            all_results.append(result_data)
+            
+            with open(eval_file, "w") as f:
+                json.dump(all_results, f, indent=2)
+                
+        except Exception as e:
+            print(f"Failed to save benchmark results to JSON: {e}")
+        
+        return result_data
 
 # Global shop service instance
 shop_service = ShopService()

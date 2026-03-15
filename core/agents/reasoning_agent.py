@@ -39,8 +39,9 @@ Instructions:
 1. Compare products based on user intent (category, purpose, budget, preferences)
 2. Identify trade-offs between products (performance vs budget, features vs portability, etc.)
 3. Consider value for money and user priorities
-4. Provide a ranked recommendation with detailed reasoning
+4. Provide a ranked recommendation of ONLY the items that accurately match the user constraints
 5. Explain any trade-offs the user should consider
+6. CRITICAL: DO NOT recommend products that violate explicit user constraints (e.g. suggesting Windows when macOS/Apple is requested). Completely exclude violating items from your JSON recommendations array.
 
 Return JSON format:
 {{
@@ -208,10 +209,6 @@ Features: {features}
     def _select_products_from_llm(self, reasoning_result: Dict[str, Any], candidates: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Select products based on LLM recommendations."""
         recommendations = reasoning_result.get("recommendations", [])
-        
-        if not recommendations:
-            # Fallback to first few candidates
-            return candidates[:3]
         
         # Get product IDs from recommendations safely handling different JSON formats
         selected_ids = []
