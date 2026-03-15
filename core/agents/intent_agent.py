@@ -20,29 +20,50 @@ logger = logging.getLogger(__name__)
 class AIEnhancedIntentAgent:
     """Enhanced Intent Agent using LLM for advanced NLP."""
     
-    def __init__(self):
+    def __init__(self, taxonomy_path: str = "config/taxonomy.json"):
         self.ai_service = get_ai_service()
         self.config = get_config()
+        self.taxonomy_path = taxonomy_path
+        self._load_taxonomy()
         self.intent_extraction_prompt = self._build_intent_extraction_prompt()
-    
+
+    def _load_taxonomy(self):
+        """Load allowed categories and purposes from config."""
+        try:
+            with open(self.taxonomy_path, 'r', encoding='utf-8') as f:
+                taxonomy = json.load(f)
+                self.allowed_categories = taxonomy.get("categories", [])
+                self.allowed_purposes = taxonomy.get("purposes", [])
+                self.allowed_preferences = taxonomy.get("preferences", [])
+        except FileNotFoundError:
+            logger.error(f"Taxonomy config not found at {self.taxonomy_path}. Using empty lists.")
+            self.allowed_categories = []
+            self.allowed_purposes = []
+            self.allowed_preferences = []
+            
     def _build_intent_extraction_prompt(self) -> str:
-        """Build the prompt template for intent extraction."""
-        return """
+        """Build the prompt template for intent extraction using loaded taxonomy bounds."""
+        categories_str = str(self.allowed_categories)
+        purposes_str = str(self.allowed_purposes)
+        preferences_str = str(self.allowed_preferences)
+        
+        return f"""
 You are an expert shopping assistant. Extract structured intent from user queries.
 
-Extract the following fields:
-- category: Product category (laptop, camera, monitor, etc.)
-- purpose: Primary use case (gaming, coding, photography, etc.)
-- budget: Maximum budget in USD (extract number, ignore currency symbols)
-- preferences: List of specific features or requirements
-- uncertainty: What information is unclear or missing
+Extract the following fields using ONLY the allowed values provided:
 
-User Query: "{user_input}"
+1. category: Product category. Must be strictly ONE of: {categories_str}
+2. purpose: Primary use case. Must be strictly ONE of: {purposes_str}
+3. budget: Maximum budget in USD (extract number, ignore currency symbols)
+4. preferences: List of specific features or requirements explicitly mentioned. Must ONLY be selected from: {preferences_str}
+5. uncertainty: What information is unclear or missing
+
+User Query: "{{user_input}}"
 
 Return ONLY valid JSON format with no markdown blocks, no intro, no outro:
 {{
-  "category": "string or null",
-  "purpose": "string or null", 
+  "category": "string from allowed list or null",
+  "purpose": "string from allowed list or null", 
   "budget": number or null,
   "preferences": ["list", "of", "strings"],
   "uncertainty": "string or null"
@@ -66,7 +87,8 @@ Only extract information explicitly mentioned in the query.
         
         try:
             # Use LLM for intent extraction
-            prompt = self.intent_extraction_prompt.format(user_input=user_input)
+            # user_input is injected into the already-formatted intent_extraction_prompt string
+            prompt = self.intent_extraction_prompt.replace("{user_input}", user_input)
             
             ai_response = self.ai_service.generate_text(
                 prompt=prompt,

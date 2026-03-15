@@ -8,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 import os
 
-from api.api.v1 import shop, status, health
+from api.routes import shop, status, health
 
 # Create FastAPI app
 app = FastAPI(
@@ -32,7 +32,7 @@ app.include_router(status.router, prefix="/api/v1")
 app.include_router(health.router, prefix="/api/v1")
 
 # Serve static files (frontend)
-frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
+frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
 if os.path.exists(frontend_dir):
     app.mount("/static", StaticFiles(directory=frontend_dir), name="static")
 
@@ -41,7 +41,7 @@ if os.path.exists(frontend_dir):
 async def root():
     """Serve the main frontend page."""
     try:
-        with open(os.path.join(frontend_dir, "index.html"), "r") as f:
+        with open(os.path.join(frontend_dir, "index.html"), "r", encoding="utf-8") as f:
             return HTMLResponse(content=f.read())
     except FileNotFoundError:
         return HTMLResponse(

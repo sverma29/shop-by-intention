@@ -107,6 +107,10 @@ class AIEnhancedRetrievalAgent:
         budget = intent_state.get("budget")
         if budget:
             semantic_candidates = self._filter_by_budget(semantic_candidates, budget)
+            
+        # Pass the top 20 semantic results directly to the LLM. 
+        # The LLM prompt is now strictly responsible for dropping mismatched categories 
+        # or intelligently retaining cross-category items when the intent implies a combo setup.
         
         # Use LLM for intelligent ranking and filtering
         ranked_candidates = self._llm_rank_candidates(query_text, semantic_candidates, intent_state)
@@ -192,10 +196,12 @@ class AIEnhancedRetrievalAgent:
             {chr(10).join(product_summaries)}
 
             Instructions:
-            1. Rank products from best match to worst match
-            2. Consider category, purpose, budget, and preferences
-            3. Remove products that clearly don't match
-            4. Return the top 10 most relevant products
+            1. Rank products from best match to worst match based purely on relevance.
+            2. Consider the requested category, purpose, budget, and preferences.
+            3. CRITICAL CATEGORY RULES:
+               - If the user explicitly requested a specific category (e.g., 'camera', 'laptop'), you MUST aggressively filter out any products from other categories that leaked through semantic search.
+               - However, if the user's intent strongly implies a combination of distinct items (e.g., 'travel setup', 'home office'), use your expert judgment to retain items across various categories that fit that specific goal.
+            4. ZERO PADDING: Only return products that are highly relevant. Returning 0, 1, or 2 items is perfectly acceptable if nothing else genuinely matches the intent. Do NOT arbitrarily fill out the list.
 
             Return JSON format:
             {{
@@ -257,7 +263,7 @@ class AIEnhancedRetrievalAgent:
             return candidates[:10]
             
         except Exception as e:
-            logger.error(f"Failed to parse LLM ranking response: {e}")
+            logger.error(f"Failed to parse LLM ranking response: {e}\nRaw LLM Output was:\n{response_text}")
             return candidates[:10]
     
     def _filter_by_budget(self, products: List[Dict[str, Any]], budget: float) -> List[Dict[str, Any]]:

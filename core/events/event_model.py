@@ -7,8 +7,9 @@ Defines the core event schema and types used throughout the agentic system.
 import uuid
 from datetime import datetime
 from typing import Dict, Any, Optional
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from enum import Enum
+from core.events.event_context import get_session_id
 
 
 class EventType(Enum):
@@ -39,10 +40,12 @@ class AgenticEvent:
     decision: Dict[str, Any]
     output_state: Dict[str, Any]
     confidence: Optional[float] = None
+    session_id: str = field(default_factory=get_session_id)
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert event to dictionary format."""
         return {
+            "session_id": self.session_id,
             "event_id": self.event_id,
             "timestamp": self.timestamp,
             "event_type": self.event_type.value,
@@ -72,7 +75,8 @@ class AgenticEvent:
             input_state=input_state,
             decision=decision,
             output_state=output_state,
-            confidence=confidence
+            confidence=confidence,
+            session_id=get_session_id()
         )
 
 

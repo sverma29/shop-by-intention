@@ -1,13 +1,11 @@
 [
     {
-        "query": "I want a gaming laptop under $1500",
+        "query": "I want a gaming laptop under $1500 with a high refresh rate",
         "expected_intent": {
             "category": "laptop",
             "purpose": "gaming",
             "budget": 1500,
-            "preferences": [
-                "gaming performance"
-            ],
+            "preferences": ["high refresh rate"],
             "uncertainty": null
         },
         "expected_products": [
@@ -17,129 +15,136 @@
         ]
     },
     {
-        "query": "I need a cheap camera for photography",
+        "query": "I need an easy to use camera for photography",
         "expected_intent": {
             "category": "camera",
             "purpose": "photography",
             "budget": 600,
-            "preferences": [
-                "beginner friendly"
-            ],
+            "preferences": ["easy to use"],
             "uncertainty": null
         },
         "expected_products": [
-            "CAM001",
-            "CAM002"
+            "CAM001"
         ]
     },
     {
-        "query": "I want a portable coding laptop",
+        "query": "Build an ergonomic home office setup under $1000",
         "expected_intent": {
-            "category": "laptop",
-            "purpose": "coding",
-            "budget": null,
-            "preferences": [
-                "lightweight",
-                "portable",
-                "long battery"
-            ],
-            "uncertainty": "budget"
-        },
-        "expected_products": [
-            "LAP003",
-            "LAP004"
-        ]
-    },
-    {
-        "query": "Build a home office setup under $1000",
-        "expected_intent": {
-            "category": "office setup",
-            "purpose": "home office",
+            "category": null,
+            "purpose": "office work",
             "budget": 1000,
-            "preferences": [
-                "ergonomic",
-                "productive"
-            ],
+            "preferences": ["ergonomic"],
             "uncertainty": null
         },
         "expected_products": [
-            "LAP003",
             "MON002",
             "KEY001",
             "MOU001",
-            "CHA002",
+            "CHA004",
             "DES001"
         ]
     },
     {
-        "query": "I need a laptop for travel and coding",
+        "query": "I need a pair of lightweight headphones for travel with industry-leading ANC",
         "expected_intent": {
-            "category": "laptop",
-            "purpose": "coding",
+            "category": "headphones",
+            "purpose": "travel",
             "budget": null,
-            "preferences": [
-                "lightweight",
-                "portable",
-                "long battery"
-            ],
+            "preferences": ["lightweight", "industry-leading ANC"],
             "uncertainty": "budget"
         },
         "expected_products": [
-            "LAP003",
-            "LAP004"
+            "HDP001",
+            "HDP002"
         ]
     },
     {
-        "query": "Find me a budget gaming setup",
+        "query": "Find me a good smartphone for vlogging with pro-res video",
         "expected_intent": {
-            "category": "gaming setup",
-            "purpose": "gaming",
-            "budget": 1200,
-            "preferences": [
-                "good performance",
-                "affordable"
-            ],
-            "uncertainty": null
-        },
-        "expected_products": [
-            "LAP005",
-            "MON002",
-            "KEY002",
-            "MOU002"
-        ]
-    },
-    {
-        "query": "I want a high-performance laptop for content creation",
-        "expected_intent": {
-            "category": "laptop",
-            "purpose": "content creation",
-            "budget": 1500,
-            "preferences": [
-                "good GPU",
-                "fast CPU",
-                "color accurate"
-            ],
-            "uncertainty": null
-        },
-        "expected_products": [
-            "LAP001",
-            "LAP002"
-        ]
-    },
-    {
-        "query": "Find a camera for vlogging",
-        "expected_intent": {
-            "category": "camera",
+            "category": "smartphone",
             "purpose": "vlogging",
             "budget": null,
-            "preferences": [
-                "compact",
-                "good autofocus"
-            ],
+            "preferences": ["pro-res video"],
             "uncertainty": "budget"
         },
         "expected_products": [
-            "CAM002"
+            "PHO001",
+            "PHO002",
+            "PHO003"
+        ]
+    },
+    {
+        "query": "I want a tablet for digital art with an AMOLED screen",
+        "expected_intent": {
+            "category": "tablet",
+            "purpose": "digital art",
+            "budget": null,
+            "preferences": ["AMOLED screen"],
+            "uncertainty": "budget"
+        },
+        "expected_products": [
+            "TAB001",
+            "TAB002"
+        ]
+    },
+    {
+        "query": "What's the best microphone for podcasting with broadcast quality?",
+        "expected_intent": {
+            "category": "microphone",
+            "purpose": "podcasting",
+            "budget": null,
+            "preferences": ["broadcast quality"],
+            "uncertainty": "budget"
+        },
+        "expected_products": [
+            "MIC001",
+            "MIC002"
+        ]
+    },
+    {
+        "query": "I need an ergonomic masterclass chair and a motorized standing desk",
+        "expected_intent": {
+            "category": null,
+            "purpose": "office work",
+            "budget": null,
+            "preferences": ["ergonomic masterclass", "motorized standing"],
+            "uncertainty": "budget"
+        },
+        "expected_products": [
+            "CHA001",
+            "CHA003",
+            "DES002",
+            "DES003"
+        ]
+    },
+    {
+        "query": "Find me a super ultrawide monitor for productivity",
+        "expected_intent": {
+            "category": "monitor",
+            "purpose": "productivity",
+            "budget": null,
+            "preferences": ["super ultrawide"],
+            "uncertainty": "budget"
+        },
+        "expected_products": [
+            "MON003"
+        ]
+    },
+    {
+        "query": "I want an Apple travel setup with macOS",
+        "expected_intent": {
+            "category": null,
+            "purpose": "travel",
+            "budget": null,
+            "preferences": ["macOS"],
+            "uncertainty": "budget"
+        },
+        "expected_products": [
+            "LAP004",
+            "PHO001",
+            "TAB001",
+            "HDP002",
+            "WCH001"
         ]
     }
 ]

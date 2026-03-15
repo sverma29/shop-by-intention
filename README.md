@@ -15,14 +15,14 @@ pip install fastapi uvicorn[standard] pydantic python-multipart
 
 ```bash
 # From the project root directory
-conda run -n setu-agentic python api/run_server.py
+python api/run_server.py
 ```
 
 The server will start on `http://localhost:8000`
 
 ### 3. Access the Interface
 
-- **Web Interface**: [http://localhost:8000/frontend.html](http://localhost:8000/frontend.html)
+- **Web Interface**: [http://localhost:8000/](http://localhost:8000/)
 - **API Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
 - **Interactive API**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
@@ -58,6 +58,28 @@ Process a shopping query through the agentic system.
   "loop_count": 3,
   "processing_time": 15.23,
   "timestamp": "2026-03-14T12:00:00"
+}
+```
+
+### POST /api/benchmark
+Run benchmark tests. Ensure queries are taken from data/benchmark_queries.json for proper evaluation as a reference.
+Benchmark results are appended to evaluation/benchmark_results.json
+
+**Request Body (optional):**
+```json
+{
+  "queries": ["query 1", "query 2", ...]
+}
+```
+
+**Example Request Body:**
+```json
+{
+  "queries": [
+    "I want a tablet for digital art with an AMOLED screen",
+    "I need an easy to use camera for photography",
+    "I need a pair of lightweight headphones for travel with industry-leading ANC"
+  ]
 }
 ```
 
@@ -105,26 +127,6 @@ Get event logs and statistics.
 
 ### GET /api/events/types
 Get all available event types.
-
-### POST /api/benchmark
-Run benchmark tests.
-
-**Request Body (optional):**
-```json
-{
-  "queries": ["query 1", "query 2", ...]
-}
-```
-
-**Example Request Body:**
-```json
-{
-  "queries": [
-    "I want a gaming laptop under $1500",
-    "I need a cheap camera for photography"
-  ]
-}
-```
 
 ### GET /api/health
 Simple health check endpoint.

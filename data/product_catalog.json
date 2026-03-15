@@ -14,15 +14,8 @@
         "screen_size": "15.6 inch",
         "resolution": "1920x1080",
         "refresh_rate": "144Hz",
-        "purpose": [
-            "gaming",
-            "content creation"
-        ],
-        "features": [
-            "RGB keyboard",
-            "high refresh rate",
-            "good cooling"
-        ]
+        "purpose": ["gaming", "content creation"],
+        "features": ["RGB keyboard", "high refresh rate", "good cooling"]
     },
     {
         "id": "LAP002",
@@ -39,15 +32,8 @@
         "screen_size": "15.6 inch",
         "resolution": "1920x1080",
         "refresh_rate": "144Hz",
-        "purpose": [
-            "gaming",
-            "high performance"
-        ],
-        "features": [
-            "RGB lighting",
-            "mechanical keyboard",
-            "advanced cooling"
-        ]
+        "purpose": ["gaming", "high performance"],
+        "features": ["RGB lighting", "mechanical keyboard", "advanced cooling"]
     },
     {
         "id": "LAP003",
@@ -64,22 +50,14 @@
         "screen_size": "13.4 inch",
         "resolution": "1920x1200",
         "refresh_rate": "60Hz",
-        "purpose": [
-            "coding",
-            "travel",
-            "office work"
-        ],
-        "features": [
-            "ultra portable",
-            "long battery",
-            "premium build"
-        ]
+        "purpose": ["coding", "travel", "office work"],
+        "features": ["ultra portable", "long battery", "premium build"]
     },
     {
         "id": "LAP004",
         "category": "laptop",
-        "brand": "MacBook",
-        "name": "Air M2",
+        "brand": "Apple",
+        "name": "MacBook Air M2",
         "price": 1300,
         "gpu": "Apple M2 8-core",
         "cpu": "Apple M2",
@@ -90,16 +68,8 @@
         "screen_size": "13.6 inch",
         "resolution": "2560x1664",
         "refresh_rate": "60Hz",
-        "purpose": [
-            "coding",
-            "travel",
-            "general use"
-        ],
-        "features": [
-            "excellent battery",
-            "silent operation",
-            "macOS"
-        ]
+        "purpose": ["coding", "travel", "general use"],
+        "features": ["excellent battery", "silent operation", "macOS"]
     },
     {
         "id": "LAP005",
@@ -116,15 +86,44 @@
         "screen_size": "15.6 inch",
         "resolution": "1920x1080",
         "refresh_rate": "120Hz",
-        "purpose": [
-            "gaming",
-            "budget gaming"
-        ],
-        "features": [
-            "good performance",
-            "affordable",
-            "RGB keyboard"
-        ]
+        "purpose": ["gaming", "budget gaming"],
+        "features": ["good performance", "affordable", "RGB keyboard"]
+    },
+    {
+        "id": "LAP006",
+        "category": "laptop",
+        "brand": "Microsoft",
+        "name": "Surface Laptop 5",
+        "price": 1299,
+        "gpu": "Intel Iris Xe",
+        "cpu": "Intel i7-1255U",
+        "ram": "16GB",
+        "storage": "512GB SSD",
+        "weight": "1.29kg",
+        "battery": "15h",
+        "screen_size": "13.5 inch",
+        "resolution": "2256x1504",
+        "refresh_rate": "60Hz",
+        "purpose": ["office work", "student", "general use"],
+        "features": ["touchscreen", "premium finish", "Windows Hello"]
+    },
+    {
+        "id": "LAP007",
+        "category": "laptop",
+        "brand": "HP",
+        "name": "Spectre x360",
+        "price": 1450,
+        "gpu": "Intel Iris Xe",
+        "cpu": "Intel i7-1355U",
+        "ram": "16GB",
+        "storage": "1TB SSD",
+        "weight": "1.36kg",
+        "battery": "14h",
+        "screen_size": "14 inch",
+        "resolution": "1920x1200",
+        "refresh_rate": "120Hz",
+        "purpose": ["office work", "art", "media consumption"],
+        "features": ["2-in-1 convertible", "OLED display", "stylus included"]
     },
     {
         "id": "CAM001",
@@ -137,15 +136,8 @@
         "lens_mount": "EF",
         "video_resolution": "1080p",
         "screen_size": "3 inch",
-        "purpose": [
-            "photography",
-            "beginner"
-        ],
-        "features": [
-            "easy to use",
-            "good image quality",
-            "interchangeable lenses"
-        ]
+        "purpose": ["photography", "beginner"],
+        "features": ["easy to use", "good image quality", "interchangeable lenses"]
     },
     {
         "id": "CAM002",
@@ -158,16 +150,36 @@
         "lens_mount": "E-mount",
         "video_resolution": "1080p",
         "screen_size": "3 inch",
-        "purpose": [
-            "photography",
-            "travel",
-            "vlogging"
-        ],
-        "features": [
-            "fast autofocus",
-            "compact",
-            "good low light performance"
-        ]
+        "purpose": ["photography", "travel", "vlogging"],
+        "features": ["fast autofocus", "compact", "good low light performance"]
+    },
+    {
+        "id": "CAM003",
+        "category": "camera",
+        "brand": "Nikon",
+        "name": "Z fc",
+        "price": 1099,
+        "type": "Mirrorless",
+        "megapixels": "20.9MP",
+        "lens_mount": "Z-mount",
+        "video_resolution": "4K",
+        "screen_size": "3 inch",
+        "purpose": ["photography", "street photography", "travel"],
+        "features": ["retro design", "fully articulating screen", "excellent vintage dials"]
+    },
+    {
+        "id": "CAM004",
+        "category": "camera",
+        "brand": "Panasonic",
+        "name": "Lumix GH6",
+        "price": 1999,
+        "type": "Mirrorless",
+        "megapixels": "25.2MP",
+        "lens_mount": "Micro Four Thirds",
+        "video_resolution": "5.7K",
+        "screen_size": "3.2 inch",
+        "purpose": ["videography", "filmmaking", "professional vlogging"],
+        "features": ["unlimited recording", "pro-level video codecs", "robust stabilization"]
     },
     {
         "id": "MON001",
@@ -179,11 +191,7 @@
         "resolution": "3840x2160",
         "refresh_rate": "60Hz",
         "panel_type": "IPS",
-        "features": [
-            "4K resolution",
-            "USB-C hub",
-            "color accurate"
-        ]
+        "features": ["4K resolution", "USB-C hub", "color accurate"]
     },
     {
         "id": "MON002",
@@ -195,11 +203,43 @@
         "resolution": "1920x1080",
         "refresh_rate": "144Hz",
         "panel_type": "IPS",
-        "features": [
-            "high refresh rate",
-            "gaming",
-            "adaptive sync"
-        ]
+        "features": ["high refresh rate", "gaming", "adaptive sync"]
+    },
+    {
+        "id": "MON003",
+        "category": "monitor",
+        "brand": "Samsung",
+        "name": "Odyssey G9",
+        "price": 1200,
+        "screen_size": "49 inch",
+        "resolution": "5120x1440",
+        "refresh_rate": "240Hz",
+        "panel_type": "VA",
+        "features": ["super ultrawide", "extreme curve", "premium gaming"]
+    },
+    {
+        "id": "MON004",
+        "category": "monitor",
+        "brand": "LG",
+        "name": "UltraGear 27GN950-B",
+        "price": 750,
+        "screen_size": "27 inch",
+        "resolution": "3840x2160",
+        "refresh_rate": "144Hz",
+        "panel_type": "Nano IPS",
+        "features": ["4K gaming", "RGB sphere lighting", "1ms response time"]
+    },
+    {
+        "id": "MON005",
+        "category": "monitor",
+        "brand": "AOC",
+        "name": "CQ27G2",
+        "price": 260,
+        "screen_size": "27 inch",
+        "resolution": "2560x1440",
+        "refresh_rate": "144Hz",
+        "panel_type": "VA",
+        "features": ["curved display", "budget 1440p", "free sync"]
     },
     {
         "id": "KEY001",
@@ -207,18 +247,11 @@
         "brand": "Logitech",
         "name": "MX Keys",
         "price": 120,
-        "type": "Mechanical",
+        "type": "Membrane",
         "switch_type": "Tactile",
         "backlight": "White",
-        "connectivity": [
-            "Bluetooth",
-            "USB"
-        ],
-        "features": [
-            "premium build",
-            "multi-device",
-            "backlight"
-        ]
+        "connectivity": ["Bluetooth", "USB"],
+        "features": ["premium build", "multi-device", "backlight"]
     },
     {
         "id": "KEY002",
@@ -230,29 +263,42 @@
         "switch_type": "Linear",
         "backlight": "RGB",
         "connectivity": "USB",
-        "features": [
-            "gaming",
-            "RGB lighting",
-            "aluminum frame"
-        ]
+        "features": ["gaming", "RGB lighting", "aluminum frame"]
+    },
+    {
+        "id": "KEY003",
+        "category": "keyboard",
+        "brand": "Keychron",
+        "name": "Q1 Pro",
+        "price": 199,
+        "type": "Mechanical",
+        "switch_type": "Tactile Custom",
+        "backlight": "RGB",
+        "connectivity": ["Bluetooth", "USB"],
+        "features": ["gasket mount", "QMK/VIA support", "aluminum body"]
+    },
+    {
+        "id": "KEY004",
+        "category": "keyboard",
+        "brand": "Razer",
+        "name": "Huntsman Mini",
+        "price": 120,
+        "type": "Optical Mechanical",
+        "switch_type": "Clicky",
+        "backlight": "RGB",
+        "connectivity": "USB",
+        "features": ["60% layout", "optical switches", "PBT keycaps"]
     },
     {
         "id": "MOU001",
         "category": "mouse",
         "brand": "Logitech",
-        "name": "MX Master 3",
+        "name": "MX Master 3S",
         "price": 100,
         "sensor_type": "Laser",
         "dpi": "8000",
-        "connectivity": [
-            "Bluetooth",
-            "USB"
-        ],
-        "features": [
-            "ergonomic",
-            "multi-device",
-            "scroll wheel"
-        ]
+        "connectivity": ["Bluetooth", "USB"],
+        "features": ["ergonomic", "multi-device", "silent clicks", "mag-speed scroll"]
     },
     {
         "id": "MOU002",
@@ -263,11 +309,29 @@
         "sensor_type": "Optical",
         "dpi": "20000",
         "connectivity": "USB",
-        "features": [
-            "gaming",
-            "ergonomic",
-            "RGB lighting"
-        ]
+        "features": ["gaming", "ergonomic", "RGB lighting"]
+    },
+    {
+        "id": "MOU003",
+        "category": "mouse",
+        "brand": "Logitech",
+        "name": "G Pro X Superlight",
+        "price": 150,
+        "sensor_type": "Optical HERO",
+        "dpi": "25600",
+        "connectivity": ["Wireless USB"],
+        "features": ["ultra lightweight", "esports gaming", "long battery"]
+    },
+    {
+        "id": "MOU004",
+        "category": "mouse",
+        "brand": "Glorious",
+        "name": "Model O Wireless",
+        "price": 80,
+        "sensor_type": "Optical BAMF",
+        "dpi": "19000",
+        "connectivity": ["Wireless USB", "USB"],
+        "features": ["honeycomb shell", "lightweight", "RGB"]
     },
     {
         "id": "CHA001",
@@ -276,24 +340,34 @@
         "name": "Aeron",
         "price": 1200,
         "material": "Mesh",
-        "features": [
-            "ergonomic",
-            "adjustable",
-            "premium"
-        ]
+        "features": ["ergonomic masterclass", "adjustable posture-fit", "premium build"]
     },
     {
         "id": "CHA002",
         "category": "chair",
         "brand": "Secretlab",
         "name": "Titan Evo",
-        "price": 400,
-        "material": "Leather",
-        "features": [
-            "gaming",
-            "adjustable",
-            "comfortable"
-        ]
+        "price": 549,
+        "material": "Leatherette",
+        "features": ["gaming specific", "magnetic memory foam pillow", "lumbar support"]
+    },
+    {
+        "id": "CHA003",
+        "category": "chair",
+        "brand": "Steelcase",
+        "name": "Leap V2",
+        "price": 1150,
+        "material": "Fabric",
+        "features": ["live back technology", "highly adjustable", "office standard"]
+    },
+    {
+        "id": "CHA004",
+        "category": "chair",
+        "brand": "IKEA",
+        "name": "Markus",
+        "price": 280,
+        "material": "Mesh / Leatherette",
+        "features": ["budget friendly", "tall backrest", "basic tilt"]
     },
     {
         "id": "DES001",
@@ -303,10 +377,218 @@
         "price": 250,
         "material": "Laminate",
         "dimensions": "160x80x74 cm",
-        "features": [
-            "adjustable height",
-            "spacious",
-            "affordable"
-        ]
+        "features": ["spacious", "minimalist", "affordable"]
+    },
+    {
+        "id": "DES002",
+        "category": "desk",
+        "brand": "UPLIFT Desk",
+        "name": "V2 Standing Desk",
+        "price": 799,
+        "material": "Bamboo",
+        "dimensions": "180x80 cm",
+        "features": ["motorized sit-stand", "heavy duty frame", "cable management"]
+    },
+    {
+        "id": "DES003",
+        "category": "desk",
+        "brand": "Secretlab",
+        "name": "MAGNUS Pro",
+        "price": 899,
+        "material": "Metal / Magnetic desk mat",
+        "dimensions": "150x70 cm",
+        "features": ["magnetic eco-system", "hidden cable tray", "motorized standing"]
+    },
+    {
+        "id": "HDP001",
+        "category": "headphones",
+        "brand": "Sony",
+        "name": "WH-1000XM5",
+        "price": 398,
+        "type": "Over-Ear",
+        "connectivity": ["Bluetooth", "3.5mm"],
+        "purpose": ["travel", "music", "noise cancellation"],
+        "features": ["industry-leading ANC", "lightweight", "touch controls"]
+    },
+    {
+        "id": "HDP002",
+        "category": "headphones",
+        "brand": "Apple",
+        "name": "AirPods Pro 2",
+        "price": 249,
+        "type": "In-Ear",
+        "connectivity": ["Bluetooth"],
+        "purpose": ["travel", "gym", "calls"],
+        "features": ["spatial audio", "mag-safe charging", "transparency mode"]
+    },
+    {
+        "id": "HDP003",
+        "category": "headphones",
+        "brand": "Sennheiser",
+        "name": "HD 600",
+        "price": 350,
+        "type": "Over-Ear Open-Back",
+        "connectivity": ["6.3mm", "3.5mm"],
+        "purpose": ["audiophile", "music production"],
+        "features": ["reference sound", "neutral tone", "requires amplifier"]
+    },
+    {
+        "id": "HDP004",
+        "category": "headphones",
+        "brand": "HyperX",
+        "name": "Cloud II Wireless",
+        "price": 149,
+        "type": "Over-Ear",
+        "connectivity": ["Wireless USB"],
+        "purpose": ["gaming", "voice chat"],
+        "features": ["7.1 surround", "detachable mic", "extreme comfort"]
+    },
+    {
+        "id": "MIC001",
+        "category": "microphone",
+        "brand": "Shure",
+        "name": "SM7B",
+        "price": 399,
+        "type": "Dynamic",
+        "connectivity": ["XLR"],
+        "purpose": ["podcasting", "vocal recording", "streaming"],
+        "features": ["broadcast quality", "shielding", "requires audio interface"]
+    },
+    {
+        "id": "MIC002",
+        "category": "microphone",
+        "brand": "Blue",
+        "name": "Yeti",
+        "price": 129,
+        "type": "Condenser",
+        "connectivity": ["USB"],
+        "purpose": ["streaming", "gaming", "calls"],
+        "features": ["multiple pickup patterns", "plug-and-play", "mute button"]
+    },
+    {
+        "id": "MIC003",
+        "category": "microphone",
+        "brand": "Rode",
+        "name": "Wireless GO II",
+        "price": 299,
+        "type": "Lavalier Wireless",
+        "connectivity": ["3.5mm", "USB"],
+        "purpose": ["vlogging", "interviews", "video production"],
+        "features": ["dual channel", "on-board recording", "tiny form factor"]
+    },
+    {
+        "id": "PHO001",
+        "category": "smartphone",
+        "brand": "Apple",
+        "name": "iPhone 15 Pro",
+        "price": 999,
+        "chip": "A17 Pro",
+        "storage": "256GB",
+        "purpose": ["general use", "photography", "mobile gaming"],
+        "features": ["titanium build", "action button", "USB-C", "pro-res video"]
+    },
+    {
+        "id": "PHO002",
+        "category": "smartphone",
+        "brand": "Samsung",
+        "name": "Galaxy S24 Ultra",
+        "price": 1299,
+        "chip": "Snapdragon 8 Gen 3",
+        "storage": "512GB",
+        "purpose": ["power user", "productivity", "photography"],
+        "features": ["S-Pen included", "AI features", "100x zoom", "anti-reflective screen"]
+    },
+    {
+        "id": "PHO003",
+        "category": "smartphone",
+        "brand": "Google",
+        "name": "Pixel 8",
+        "price": 699,
+        "chip": "Tensor G3",
+        "storage": "128GB",
+        "purpose": ["photography", "pure android"],
+        "features": ["magic eraser", "7-year updates", "excellent point-and-shoot"]
+    },
+    {
+        "id": "PHO004",
+        "category": "smartphone",
+        "brand": "Samsung",
+        "name": "Galaxy Z Fold 5",
+        "price": 1799,
+        "chip": "Snapdragon 8 Gen 2",
+        "storage": "512GB",
+        "purpose": ["productivity", "multitasking", "media consumption"],
+        "features": ["folding screen", "tablet mode", "flex hinge"]
+    },
+    {
+        "id": "TAB001",
+        "category": "tablet",
+        "brand": "Apple",
+        "name": "iPad Pro 12.9 (M2)",
+        "price": 1099,
+        "storage": "256GB",
+        "screen_size": "12.9 inch",
+        "purpose": ["digital art", "video editing", "laptop replacement"],
+        "features": ["mini-LED display", "apple pencil hover", "thunderbolt"]
+    },
+    {
+        "id": "TAB002",
+        "category": "tablet",
+        "brand": "Samsung",
+        "name": "Galaxy Tab S9",
+        "price": 799,
+        "storage": "128GB",
+        "screen_size": "11 inch",
+        "purpose": ["media consumption", "drawing", "general use"],
+        "features": ["AMOLED screen", "S-Pen included", "IP68 water resistant"]
+    },
+    {
+        "id": "TAB003",
+        "category": "tablet",
+        "brand": "Amazon",
+        "name": "Kindle Scribe",
+        "price": 339,
+        "storage": "32GB",
+        "screen_size": "10.2 inch",
+        "purpose": ["reading", "note taking"],
+        "features": ["e-ink display", "weeks of battery", "stylus included"]
+    },
+    {
+        "id": "WEB001",
+        "category": "webcam",
+        "brand": "Logitech",
+        "name": "Brio 4K",
+        "price": 169,
+        "resolution": "4K",
+        "purpose": ["video conferencing", "streaming"],
+        "features": ["HDR", "Windows Hello", "adjustable field of view"]
+    },
+    {
+        "id": "WEB002",
+        "category": "webcam",
+        "brand": "Elgato",
+        "name": "Facecam",
+        "price": 149,
+        "resolution": "1080p 60fps",
+        "purpose": ["streaming", "content creation"],
+        "features": ["uncompressed video", "premium lens", "camera hub software"]
+    },
+    {
+        "id": "WCH001",
+        "category": "smartwatch",
+        "brand": "Apple",
+        "name": "Watch Series 9",
+        "price": 399,
+        "purpose": ["fitness tracking", "notifications", "health"],
+        "features": ["double tap gesture", "bright screen", "ECG"]
+    },
+    {
+        "id": "WCH002",
+        "category": "smartwatch",
+        "brand": "Garmin",
+        "name": "Fenix 7",
+        "price": 699,
+        "purpose": ["outdoor sports", "extreme fitness", "hiking"],
+        "features": ["solar charging", "topographic maps", "insane battery life"]
     }
 ]

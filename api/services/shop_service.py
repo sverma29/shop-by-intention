@@ -5,6 +5,7 @@ Shop service for handling shopping queries through the agentic system.
 import time
 import sys
 import os
+import json
 from typing import Dict, Any, Optional, List
 from datetime import datetime
 
@@ -23,7 +24,8 @@ from core.agents.reasoning_agent import reason_products
 from core.agents.cart_agent import build_cart
 from core.agents.evaluation_agent import evaluate_cart
 from core.loops.loop_controller import control_loop, reset_loop
-from core.events.event_logger import get_event_statistics, clear_logs
+from core.events.event_logger import get_event_statistics
+from core.events.event_context import set_session_id
 
 
 class ShopService:
@@ -46,7 +48,9 @@ class ShopService:
         """
         # Reset for new query
         reset_loop()
-        clear_logs()
+        
+        # Initialize context trace session
+        trace_id = set_session_id(session_id)
         
         # Initialize state
         intent_state: Optional[Dict[str, Any]] = None
@@ -385,14 +389,42 @@ class ShopService:
         # Calculate evaluation metrics
         evaluation_metrics = self._calculate_evaluation_metrics(evaluations)
         
-        return {
+        result_data = {
             "metrics": metrics,
             "evaluation": evaluation_metrics,
             "individual_results": evaluations,
             "processing_time": processing_time,
             "timestamp": datetime.utcnow().isoformat()
         }
-
+        
+        # Append results to evaluation JSON
+        try:
+            eval_dir = os.path.join(
+                os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+                "evaluation"
+            )
+            os.makedirs(eval_dir, exist_ok=True)
+            eval_file = os.path.join(eval_dir, "benchmark_results.json")
+            
+            all_results = []
+            if os.path.exists(eval_file):
+                try:
+                    with open(eval_file, "r") as f:
+                        all_results = json.load(f)
+                        if not isinstance(all_results, list):
+                            all_results = [all_results]
+                except json.JSONDecodeError:
+                    pass
+                    
+            all_results.append(result_data)
+            
+            with open(eval_file, "w") as f:
+                json.dump(all_results, f, indent=2)
+                
+        except Exception as e:
+            print(f"Failed to save benchmark results to JSON: {e}")
+        
+        return result_data
 
 # Global shop service instance
 shop_service = ShopService()
