@@ -61,6 +61,27 @@ Process a shopping query through the agentic system.
 }
 ```
 
+### POST /api/benchmark
+Run benchmark tests. Ensure queries are taken from data/benchmark_queries.json for proper evaluation as a reference.
+
+**Request Body (optional):**
+```json
+{
+  "queries": ["query 1", "query 2", ...]
+}
+```
+
+**Example Request Body:**
+```json
+{
+  "queries": [
+    "I want a tablet for digital art with an AMOLED screen",
+    "I need an easy to use camera for photography",
+    "I need a pair of lightweight headphones for travel with industry-leading ANC"
+  ]
+}
+```
+
 ### GET /api/status
 Get system status and component health.
 
@@ -105,27 +126,6 @@ Get event logs and statistics.
 
 ### GET /api/events/types
 Get all available event types.
-
-### POST /api/benchmark
-Run benchmark tests.
-
-**Request Body (optional):**
-```json
-{
-  "queries": ["query 1", "query 2", ...]
-}
-```
-
-**Example Request Body:**
-```json
-{
-  "queries": [
-    "I want a tablet for digital art with an AMOLED screen",
-    "I need an easy to use camera for photography",
-    "I need a pair of lightweight headphones for travel with industry-leading ANC"
-  ]
-}
-```
 
 ### GET /api/health
 Simple health check endpoint.
