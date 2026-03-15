@@ -15,14 +15,14 @@ pip install fastapi uvicorn[standard] pydantic python-multipart
 
 ```bash
 # From the project root directory
-conda run -n setu-agentic python api/run_server.py
+python api/run_server.py
 ```
 
 The server will start on `http://localhost:8000`
 
 ### 3. Access the Interface
 
-- **Web Interface**: [http://localhost:8000/frontend.html](http://localhost:8000/frontend.html)
+- **Web Interface**: [http://localhost:8000/](http://localhost:8000/)
 - **API Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
 - **Interactive API**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
 

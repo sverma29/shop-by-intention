@@ -41,7 +41,7 @@ if os.path.exists(frontend_dir):
 async def root():
     """Serve the main frontend page."""
     try:
-        with open(os.path.join(frontend_dir, "index.html"), "r") as f:
+        with open(os.path.join(frontend_dir, "index.html"), "r", encoding="utf-8") as f:
             return HTMLResponse(content=f.read())
     except FileNotFoundError:
         return HTMLResponse(
